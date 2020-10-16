@@ -18,9 +18,16 @@
 
 		<button :disabled="buttonDisabled">เพิ่มบันทึก</button>
 	</form>
-  <div v-for='(item, index) in $store.state.items' :key='index'>
-    {{ item.note }}
+  <div v-if='$store.state.items.length > 0'>
+    <div v-for='(item, index) in $store.state.items' :key='index'>
+      {{ item.note }} | {{ item.price }} บาท
+    </div>
   </div>
+
+  <div v-else>
+    ไม่มีรายการที่บันทึกไว้!
+  </div>
+  
 </template>
 
 <script>
