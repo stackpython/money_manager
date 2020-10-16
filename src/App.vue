@@ -18,6 +18,9 @@
 
 		<button :disabled="buttonDisabled">เพิ่มบันทึก</button>
 	</form>
+
+  <p>ราคารวม: {{ total }} บาท</p>
+
   <div v-if='$store.state.items.length > 0'>
     <div v-for='(item, index) in $store.state.items' :key='index'>
       {{ item.note }} | {{ item.price }} บาท
@@ -40,6 +43,16 @@ export default {
 		};
 	},
 	computed: {
+    total() {
+      let _price = 0;
+      for (let item of this.$store.state.items) {
+        // เนื่องจาก price ถูกเก็บเป็นสตริง จึงจำเป็นตรงแปลงค่าเป็น int ก่อน 
+        // สามารถแปลงได้โดยใช้ parseInt()
+        // https://www.w3schools.com/jsref/jsref_parseint.asp
+        _price += parseInt(item.price);
+      }
+      return _price;
+    },
 		buttonDisabled() {
 			if (this.note === '' || this.price === '') {
 				return true;
